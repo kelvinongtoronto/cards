@@ -14,12 +14,11 @@ else:
         print('\t',i, games[i])
     game_mode = input()
 
-d1=Deck(ranks=['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'],unicard=True)
+d1=Deck(ranks=['A','2','3','4','5','6','7','8','9','T','J','Q','K'])
 if game_mode == '4':
     for i in range(0,3):
-        for suit in d1.SUITS:
+        for suit in Deck.SUITS:
             d1.cards.append(Card(suit,'K'))
-
 d1.shuffle()
 
 c0=d1.get_next_card()
@@ -230,8 +229,8 @@ print("Playing %s." % (games[int(game_mode)]))
 while game_on:
     print("\nNow it's your turn!")
     players_turn()
-#     if not game_on:
-#         break
+#   if not game_on:
+#       break
     print("\nNow it's my turn!")
     if game_mode == '0':
         lowest_card()
@@ -243,5 +242,5 @@ while game_on:
         not_royal()
     elif game_mode == '4':
         not_king()
-#     if not game_on:
-#         break
+#   if not game_on:
+#       break

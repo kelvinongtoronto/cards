@@ -21,6 +21,9 @@ class Card(object):
         self.unicard_mode = unicard_mode
         self.color = color
         
+    def __hash__(self):
+        return hash(self.back+'-'+self.rank+self.suit)
+        
     def __str__(self):
         '''() -> str <==> str(self)
         Return this Card's rank and suit or its back if this
@@ -76,3 +79,6 @@ class Card(object):
         Make this Card be face down.
         '''
         self.is_face_up = False
+    
+    def is_joker(self):
+        return self.suit == ''

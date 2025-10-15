@@ -17,16 +17,16 @@ origin1 = (0,0)
 xseparation = 25
 
 # Load the image
-img = pygame.image.load("60x80cards.png")
-width, height = img.get_width()/14, img.get_height()/4
+img = pygame.image.load("SolitaireCards.png")
+width, height = img.get_width()/13, img.get_height()/6
 
 #create the deck
-RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-SUITS = ['S','H','C','D']
-JOKER = ['black', 'red']
-d = Deck(jokers=JOKER)
+d = Deck()
 d.shuffle()
+RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K']
+SUITS = ['S','H','C','D']
 #c = d.get_next_card() #face down
+DECK_NUMBER = int(sys.argv[1]) if len(sys.argv)>1 else 0
 
 tableau={}
 
@@ -39,16 +39,15 @@ def get_moused_card(mx, my):
 while True: # main game loop
     if not d.is_empty():
         # draw a card
-        c = d.deal_next_card()# if random()>0.5 else d.get_next_card()
-        # print(c)
-        rank = RANKS.index(c.rank) if not c.is_joker() else 13
-        suit = SUITS.index(c.suit) if not c.is_joker() else JOKER.index(c.rank)+2
+        c = d.deal_next_card() if random()>0.5 else d.get_next_card()
+        rank = RANKS.index(c.rank)
+        suit = SUITS.index(c.suit)
         
         # Blit the card
         if c.is_face_up:
             source_area = pygame.Rect((width*rank, height*suit), (width, height))
         else:
-            source_area = pygame.Rect((width*13, height*1), (width, height))
+            source_area = pygame.Rect((width*(DECK_NUMBER%13), height*(4+DECK_NUMBER//13)), (width, height))
             
         screen.blit(img, origin1, source_area)
         tableau[c] = (origin1, (origin1[0]+xseparation, origin1[1]+height))

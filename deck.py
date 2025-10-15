@@ -26,7 +26,7 @@ class Deck(object):
             # for rank in Deck.RANKS[low_i : high_i + 1]:
                 # self.cards.append(card.Card(suit, rank))
     
-    def __init__(self, suits=['S','H','C','D'], ranks=['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'], backs=['XX'], unicard=False, color=False):
+    def __init__(self, suits=['S','H','C','D'], ranks=['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'], backs=['XX'], jokers=[], unicard=False, color=False):
         '''() -> Deck
         Create new Deck with 52 face-down cards.
         '''
@@ -39,6 +39,8 @@ class Deck(object):
             for suit in suits:
                 for rank in ranks:
                     self.cards.append(card.Card(self, suit, rank, back, unicard, color))
+            for joker in jokers:
+                self.cards.append(card.Card(self, '', joker, back, unicard, color))
 
     def shuffle(self):
         '''() -> NoneType

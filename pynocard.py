@@ -48,8 +48,6 @@ class Game(object):
         self.game_mode = 0
         self.delay = 0
         self.frame = 0
-        self.player_discarded = [False, False, False, False]
-        self.opponent_discarded = [False, False, False, False]
 
     def new_game(self):
         d1=Deck(SUITS,RANKS)
@@ -78,6 +76,8 @@ class Game(object):
 
         self.player=[c0,c1,c2,c3]
         self.opponent=[e0,e1,e2,e3]
+        self.player_discarded = [False, False, False, False]
+        self.opponent_discarded = [False, False, False, False]
         self.deck = d1
 
 g = Game()
@@ -125,7 +125,7 @@ def get_card_rect(card, frame=0):
     else:
         a = BACKS[g.current_back]
         if a == (1,5):
-            if frame > 30:
+            if frame < 15 or (frame > 30 and frame < 45):
                 return pygame.Rect((width*(a[0]+1), height*(a[1])), (width, height))
             else:
                 return pygame.Rect((width*a[0], height*a[1]), (width, height))
@@ -156,7 +156,7 @@ def highest_card(): # playing Lowest Hand
     else:
         highest = 0
         for i in [1,2,3]:
-            if g.opponent[i] < g.opponent[highest]:
+            if g.opponent[i] > g.opponent[highest]:
                 highest = i
         pygame.mixer.Sound.play(trash_sound)
         g.opponent_discarded[highest] = True

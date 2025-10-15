@@ -24,13 +24,11 @@ FACES = 'BA23456789TJCQKO'
 UNICODE_FACES = '0123456789ABCDEF'
 SUITS = 'SHDC'
 UNICODE_SUITS = 'ABCD'
-COLORS = ['\x1b[%dm' % c for c in (39, 31, 34, 32, 39)]
 BACKS = ['', 'XX', 'YY', 'ZZ']
 
 def unicard(card, color=False):
     if card[:2] == '10':
         card = 'T' + card[2]
-    #if card[:1].upper() == 'B':
     elif card[0] in FACES and card[1] in SUITS:
         face, suit = card.upper()
     else:
@@ -40,8 +38,14 @@ def unicard(card, color=False):
             UNICODE_SUITS[SUITS.index(suit)],
             UNICODE_FACES[FACES.index(face)]
             ), base=16))
-    if color:
-        c = COLORS[SUITS.index(suit)] + c + COLORS[-1]
-    if card in BACKS:
-        c = COLORS[BACKS.index(card)] + c + COLORS[-1]
+    return c
+
+def tarot(card, color=False):
+    rank = int(card)
+    if rank == 22:
+        rank = 0
+    else:
+        face, suit = 'BS'
+        
+    c = unichr(int('0001f0e0'), base=16) + rank
     return c
